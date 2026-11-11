@@ -1,0 +1,249 @@
+/* ============ Colors (from your Coolors palette) ============ */
+:root {
+  --pacific-blue: #7FB7BE;
+  --frozen-water: #D3F3EE;
+  --golden-glow: #C9BE5C;   /* softer than the original #DACC3E, easier on the eyes */
+  --text: #17302F;          /* dark text for strong contrast */
+  --text-soft: #2a4443;     /* darker so small gray text stays readable on the darker cards */
+  --error: #7a1212;
+  --success: #1d5c3a;
+  --radius: 12px;
+}
+
+/* ============ Base ============ */
+* { box-sizing: border-box; }
+
+html { font-size: 112.5%; } /* 18px: larger text for desktop screens */
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", Arial, sans-serif;
+  line-height: 1.6;
+  color: var(--text);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  /* your background picture (background.png); only the middle is dimmed, the corners keep their original color */
+  background-color: var(--frozen-water);
+  background-image: radial-gradient(ellipse at center, rgba(23, 48, 47, 0.2) 0%, rgba(23, 48, 47, 0.2) 40%, rgba(23, 48, 47, 0) 85%), url("background.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+[hidden] { display: none !important; }
+
+h1, h2 { line-height: 1.25; margin-top: 0; }
+h1 { font-size: 2.4rem; }
+h2 { font-size: 1.35rem; }
+
+/* ============ Skip link (keyboard users) ============ */
+.skip-link {
+  position: absolute;
+  left: -999px;
+  top: 0;
+  background: var(--text);
+  color: var(--frozen-water);
+  padding: 0.6rem 1rem;
+  z-index: 10;
+}
+.skip-link:focus { left: 0; }
+
+/* ============ Header and navigation ============ */
+.site-header {
+  background: linear-gradient(90deg, var(--pacific-blue), #9ccfd0);
+  border-bottom: 4px solid var(--golden-glow);
+}
+
+.header-inner {
+  max-width: none; /* no limit: stretches to the screen edges */
+  margin: 0 auto;
+  padding: 1rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.logo {
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: var(--text);
+  text-decoration: none;
+}
+
+.nav-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.nav-list a {
+  display: block;
+  padding: 0.5rem 1rem;
+  border-radius: 999px;
+  color: var(--text);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.nav-list a:hover { background: rgba(255, 255, 255, 0.35); }
+
+/* the page you are on is highlighted */
+.nav-list a[aria-current="page"] {
+  background: var(--golden-glow);
+}
+
+/* ============ Layout ============ */
+main {
+  flex: 1;
+  width: 100%;
+  max-width: none; /* no limit: stretches to the screen edges */
+  margin: 0 auto;
+  padding: 3rem 2rem;
+}
+
+/* semi-transparent card: less white, still readable */
+.card {
+  background: rgba(170, 210, 207, 0.9);
+  border: 1px solid rgba(23, 48, 47, 0.15);
+  border-radius: var(--radius);
+  padding: 2.5rem;
+  margin-bottom: 2rem;
+  font-size: 1.1rem; /* text inside cards (inputs and buttons follow it) */
+}
+
+.lead { font-size: 1.2rem; color: var(--text-soft); }
+
+/* ============ Buttons ============ */
+.btn {
+  display: inline-block;
+  font: inherit;
+  font-weight: 700;
+  padding: 0.7rem 1.5rem;
+  border-radius: 8px;
+  border: 2px solid var(--text);
+  cursor: pointer;
+  text-decoration: none;
+  color: var(--text);
+}
+
+.btn-primary { background: var(--golden-glow); }
+.btn-primary:hover { background: #D4CA76; }
+
+.btn-secondary { background: transparent; }
+.btn-secondary:hover { background: rgba(255, 255, 255, 0.4); }
+
+/* ============ Form ============ */
+.form-group { margin-bottom: 1.25rem; }
+
+label { display: block; font-weight: 600; margin-bottom: 0.3rem; }
+
+.required { color: var(--error); }
+
+.hint { font-size: 1rem; color: var(--text-soft); margin: 0 0 0.3rem; }
+
+input, select {
+  width: 100%;
+  font: inherit;
+  color: var(--text);
+  padding: 0.65rem 0.8rem;
+  border: 2px solid var(--text-soft);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.55);
+}
+
+input.invalid, select.invalid {
+  border-color: var(--error);
+  background: rgba(255, 235, 235, 0.8);
+}
+
+.error {
+  display: block;
+  min-height: 1.25rem;
+  margin-top: 0.25rem;
+  color: var(--error);
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.button-row { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 0.5rem; }
+
+/* Desktop only: form fields in two columns (full name on its own row) */
+@media (min-width: 801px) {
+  #registerForm {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 2rem;
+    align-items: end; /* keeps the input boxes lined up in each row */
+  }
+  #registerForm .form-group:first-child,
+  #registerForm .button-row {
+    grid-column: 1 / -1; /* span both columns */
+  }
+}
+
+/* ============ Confirmation area ============ */
+.confirmation {
+  border-left: 6px solid var(--success);
+  background: rgba(190, 224, 220, 0.95);
+}
+
+.confirmation h2 { color: var(--success); }
+
+.confirmation dl { margin: 1rem 0 0; display: grid; grid-template-columns: max-content 1fr; gap: 0.35rem 1rem; }
+.confirmation dt { font-weight: 700; }
+.confirmation dd { margin: 0; }
+
+/* ============ Confirmation popup (the <dialog> in register.html) ============ */
+dialog {
+  width: min(90vw, 480px);
+  padding: 2rem;
+  border: 2px solid var(--text);
+  border-radius: var(--radius);
+  background: #b4dcd9; /* solid, so the text is always readable */
+  color: var(--text);
+  font-size: 1.1rem;
+}
+
+dialog::backdrop { background: rgba(23, 48, 47, 0.55); } /* dims the page behind the popup */
+
+dialog { text-align: center; }
+
+dialog p { margin: 0 0 1.5rem; }
+
+dialog .button-row { justify-content: center; } /* centers the Cancel and Yes buttons too */
+
+/* ============ Keyboard focus indicator ============ */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+.confirmation:focus-visible {
+  outline: 3px solid var(--text);
+  outline-offset: 3px;
+  box-shadow: 0 0 0 6px var(--golden-glow);
+}
+
+/* ============ Footer ============ */
+.site-footer {
+  text-align: center;
+  padding: 1.25rem;
+  background: rgba(127, 183, 190, 0.5);
+  color: var(--text);
+  font-size: 0.95rem;
+}
+
+/* ============ Responsive (phones and small screens) ============ */
+@media (max-width: 600px) {
+  h1 { font-size: 1.6rem; }
+  .header-inner { flex-direction: column; align-items: flex-start; }
+  .card { padding: 1.25rem; }
+  .button-row .btn { width: 100%; text-align: center; }
+  .confirmation dl { grid-template-columns: 1fr; }
+}
